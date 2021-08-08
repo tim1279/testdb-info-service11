@@ -31,7 +31,7 @@ public class Question {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Set<AnswerOption> answerOption;

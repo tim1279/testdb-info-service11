@@ -1,47 +1,57 @@
 package demo.service;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.dto.ClientDTO;
 import demo.entity.Client;
 import demo.repository.ClientRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class ClientService {
 
     private final ClientRepository clientRepository;
     private final ObjectMapper mapper;
 
-    public ClientDTO getClient(Long id) {
-gi        var client = clientRepository.getById(id);
-        var clientDTO = toDTO(client);
-        return clientDTO;
+    @Transactional
+    public Client getById(Long id) {
+        return clientRepository.getById(id);
     }
 
-    public ClientDTO toDTO(Client client) {
-        var clientDTO = mapper.convertValue(client, ClientDTO.class);
-        return clientDTO;
+    @Transactional
+    public Client create(Client client) {
+        return clientRepository.save(client);
     }
 
-    public ClientDTO create(ClientDTO clientDTO) {
-        clientDTO.setLogin(generateLogin(clientDTO));
-        var client = mapper.convertValue(clientDTO, Client.class);
-        client.setPassword("root");
-        var clientSaved = clientRepository.save(client);
-        return toDTO(clientSaved);
+    @Transactional
+    public Client findByEmail(String email) {
+        var clientOp = clientRepository.findByEmail(email);
+        return clientOp.get();
     }
 
-    public String generateLogin(ClientDTO clientDTO) {
+    @Transactional
+    public void delete(Long id) {
+        clientRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Client update(Client client) {
+        return clientRepository.save(client);
+    }
+
+
+    public String generateLogin(Client client) {
         StringBuilder sb = new StringBuilder();
         var random = new Random();
         var randomInt = random.nextInt(25);
-        return sb.append(clientDTO.getFirstName()).append("_")
-                .append(clientDTO.getLastName())
+        return sb.append(client.getFirstName()).append("_")
+                .append(client.getLastName())
                 .append(randomInt).toString();
     }
 }

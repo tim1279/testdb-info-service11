@@ -17,12 +17,13 @@ import javax.persistence.*;
 @Table(name = "answer_option")
 public class AnswerOption {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
     @Column
     String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties("question")
     @JoinColumn(name = "question_id")
     private Question question;

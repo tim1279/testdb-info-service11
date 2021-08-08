@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class ClientQuizAnswerDTO {
 
     private Long id;
+    private Long clientId;
     private String text;
 
 }

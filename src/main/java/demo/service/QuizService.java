@@ -1,35 +1,41 @@
 package demo.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.dto.ClientDTO;
-import demo.dto.QuizDTO;
-import demo.entity.Client;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import demo.entity.Quiz;
 import demo.repository.QuizRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
 public class QuizService {
 
     private final QuizRepository quizRepository;
-    private final ObjectMapper mapper;
 
-    public QuizDTO get(Long id) {
+    @Transactional
+    public Quiz get(Long id) {
         var quiz = quizRepository.getById(id);
-        var quizDTO = mapper.convertValue(quiz, QuizDTO.class);
-        return quizDTO;
+        return quiz;
     }
 
-    public QuizDTO create(QuizDTO quizDTO) {
-        var quiz = mapper.convertValue(quizDTO, Quiz.class);
-        var quizSaved = quizRepository.save(quiz);
-        return toDTO(quizSaved);
+    @Transactional
+    public Quiz create(Quiz quiz) {
+        return quizRepository.save(quiz);
     }
 
-    public QuizDTO toDTO(Quiz quiz) {
-        var quizDTO = mapper.convertValue(quiz, QuizDTO.class);
-        return quizDTO;
+    @Transactional
+    public void delete(Long quizId) {
+        quizRepository.deleteById(quizId);
     }
+
+    @Transactional
+    public void update(Quiz quiz) {
+        quizRepository.save(quiz);
+    }
+
+//    public ObjectMapper updateMapper() {
+//        return mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+//    }
 }

@@ -18,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Client {
     @Id
@@ -34,7 +35,7 @@ public class Client {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.DETACH)
     @JsonIgnore
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Set<ClientQuizAnswer> clientQuizAnswers;

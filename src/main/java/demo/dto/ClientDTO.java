@@ -7,6 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -14,8 +19,14 @@ import org.springframework.stereotype.Component;
 public class ClientDTO {
 
     private Long id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+
+    private String passport;
+    private String snils;
+    @Email
     private String email;
     private String login;
 

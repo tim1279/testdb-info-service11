@@ -19,7 +19,7 @@ public class ClientQuizAnswer {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties("client_quiz_answer")
     @JoinColumn(name = "client_id")
     private Client client;
@@ -27,12 +27,12 @@ public class ClientQuizAnswer {
     @Column
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("client_quiz_answer")
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("client_quiz_answer")
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
