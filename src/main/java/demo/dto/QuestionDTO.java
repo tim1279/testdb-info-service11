@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Component
 public class QuestionDTO {
 
-    private Long id;
     private String text;
     private String type;
 

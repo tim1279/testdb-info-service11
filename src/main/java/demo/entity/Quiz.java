@@ -10,10 +10,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,27 +31,35 @@ public class Quiz implements Serializable {
     @JsonIgnoreProperties("client")
     @JsonIgnore
     @JoinColumn(name = "client_id")
+    @Getter
+    @Setter
     private Client client;
 
     @Column
     @Getter
     @Setter
-    private Instant dateStart;
+    private LocalDate dateStart = LocalDate.now();
 
     @Column
     @Getter
     @Setter
-    private Instant dateEnd;
+    private LocalDate dateEnd = LocalDate.now();
 
     @Column
+    @Getter
+    @Setter
     private String description;
 
     @Column
+    @Getter
+    @Setter
     private Boolean active;
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+    @Getter
+    @Setter
     private Set<Question> questions;
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

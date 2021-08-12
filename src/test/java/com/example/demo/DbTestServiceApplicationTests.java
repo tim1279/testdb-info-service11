@@ -69,12 +69,12 @@ class DbTestServiceApplicationTests {
 
     }
 
-    @Test
-    public void shouldPersist() {
-        Quiz quiz = new Quiz();
-        quiz.setActive(true);
-        em.persist(quiz);
-    }
+//    @Test
+//    public void shouldPersist() {
+//        Quiz quiz = new Quiz();
+//        quiz.setActive(true);
+//        em.persist(quiz);
+//    }
 
     @AfterAll
     public static void close() {

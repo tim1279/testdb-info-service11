@@ -1,7 +1,5 @@
 package demo.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import demo.entity.Quiz;
 import demo.repository.QuizRepository;
 import lombok.AllArgsConstructor;
@@ -35,7 +33,4 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-//    public ObjectMapper updateMapper() {
-//        return mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-//    }
 }

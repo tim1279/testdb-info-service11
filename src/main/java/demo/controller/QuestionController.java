@@ -4,11 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.data.ResponseStatus;
 import demo.dto.QuestionDTO;
-import demo.dto.QuizDTO;
 import demo.entity.Question;
-import demo.entity.Quiz;
 import demo.service.QuestionService;
-import demo.service.QuizService;
 import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @AllArgsConstructor
-@RequestMapping("/api/questions")
+@RequestMapping("/questions")
 @RestController
 public class QuestionController {
 
@@ -40,7 +37,7 @@ public class QuestionController {
         return ResponseEntity.ok(questionDTOConverted);
     }
 
-    @PatchMapping("/update/{questionId}")
+    @PatchMapping("/{questionId}")
     public ResponseEntity<QuestionDTO> update(@RequestParam Long questionId, @RequestBody QuestionDTO questionDTO) throws IOException {
         var question = questionService.get(questionId);
         if (question == null) {
