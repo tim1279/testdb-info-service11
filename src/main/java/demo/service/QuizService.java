@@ -29,8 +29,8 @@ public class QuizService {
     }
 
     @Transactional
-    public void update(Quiz quiz) {
-        quizRepository.save(quiz);
+    public Quiz update(Quiz quiz) {
+        return quizRepository.save(quiz);
     }
 
 }

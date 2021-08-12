@@ -43,15 +43,12 @@ public class QuizController {
         if (quiz == null) {
             throw new ObjectNotFoundException(null, "quiz");
         }
-        try {
-            var quizDTOJson = mapper.writeValueAsString(quizDTO);
-            var quizConverted = mapper.readerForUpdating(quiz).readValue(quizDTOJson, Quiz.class);
-            quizService.update(quizConverted);
-            var quizDTOUpdated = mapper.convertValue(quizConverted, QuizDTO.class);
-            return ResponseEntity.ok(quizDTOUpdated);
-        } catch (Exception e) {
-            throw new Exception("error during converting quiz");
+        if (quizDTO.getName() != null) {
+            quiz.setName(quizDTO.getName());
         }
+        var quizUpdated = quizService.update(quiz);
+        var quizDTOUpdated = mapper.convertValue(quizUpdated, QuizDTO.class);
+        return ResponseEntity.ok(quizDTOUpdated);
     }
 
     @PostMapping("/")

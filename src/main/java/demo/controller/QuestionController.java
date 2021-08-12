@@ -43,11 +43,15 @@ public class QuestionController {
         if (question == null) {
             throw new ObjectNotFoundException("fail", "not found");
         }
-        var json = mapper.writeValueAsString(questionDTO);
-        var questionConverted = mapper.readerForUpdating(question).readValue(json, Question.class);
-        questionService.update(questionConverted);
-        var questionDTOUpdated = mapper.convertValue(questionConverted, QuestionDTO.class);
-        return ResponseEntity.ok(questionDTOUpdated);
+        if (questionDTO.getText() != null) {
+            question.setText(questionDTO.getText());
+        }
+        if (questionDTO.getType() != null) {
+            question.setType(questionDTO.getType());
+        }
+        var questionDTOUpdated = questionService.update(question);
+        var questionUpdated = mapper.convertValue(questionDTOUpdated, QuestionDTO.class);
+        return ResponseEntity.ok(questionUpdated);
     }
 
     @DeleteMapping

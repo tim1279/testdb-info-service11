@@ -33,6 +33,8 @@ public class Client {
     @Column
     private String login;
     @Column
+    private String snils;
+    @Column
     private String password;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.DETACH)

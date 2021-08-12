@@ -16,5 +16,6 @@ public class ClientDTO {
     private String snils;
     private String email;
     private String login;
+    private String password;
 
 }

@@ -10,6 +10,7 @@ import demo.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +42,15 @@ public class ClientController {
     @PatchMapping("/{clientId}")
     public ResponseEntity<ClientDTO> update(@RequestParam Long clientId, @RequestBody ClientDTO clientDTO) throws JsonProcessingException {
         var client = clientService.getById(clientId);
-        var clientUpdated = updateMapper().readerForUpdating(client).readValue(mapper.writeValueAsString(clientDTO));
+        if (client == null) {
+            throw new ObjectNotFoundException(null, "client not found");
+        }
+        if (clientDTO.getSnils() != null) {
+            client.setSnils(clientDTO.getSnils());
+        }
+        if (clientDTO.getPassword() != null) {
+            client.setPassword(clientDTO.getPassword());
+        }
         var clientUpdatedReturn = clientService.update(client);
         var clientDTOupdated = mapper.convertValue(clientUpdatedReturn, ClientDTO.class);
         return ResponseEntity.ok(clientDTOupdated);
